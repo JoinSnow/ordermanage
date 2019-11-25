@@ -11,5 +11,11 @@
 
     <artifactId>ordermanage_dao</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>java971</groupId>
+            <artifactId>ordermanage_domain</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>
