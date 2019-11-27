@@ -75,26 +75,24 @@
                 </div>
                 <div class="box-body">
                     <!-- 数据表格 -->
-                    <form action="${pageContext.request.contextPath}/product/deleteById" method="post" id="delForm">
+                    <form action="" method="post" name="productForm" id="productForm">
                         <div class="table-box">
                             <!--工具栏-->
                             <div class="pull-left">
                                 <div class="form-group form-inline">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default" title="新建"
-                                                onclick='location.href="${pageContext.request.contextPath}/product_add.jsp"'>
-                                            <i
-                                                    class="fa fa-file-o"></i> 新建
+                                                onclick='location.href="/products-add.jsp"'><i class="fa fa-file-o"></i>
+                                            新增
                                         </button>
-                                        <button type="submit" class="btn btn-default" title="删除" id="delBatch"
-                                                <%--onclick='confirm("你确认要删除吗？")'--%>
-                                        ><i class="fa fa-trash-o"></i> 删除
+                                        <button type="buttom" class="btn btn-default" title="删除" onclick="del()"><i
+                                                class="fa fa-trash-o"></i> 删除
                                         </button>
-                                        <button type="button" class="btn btn-default" title="开启"
-                                                onclick='confirm("你确认要开启吗？")'><i class="fa fa-check"></i> 开启
+                                        <button type="buttom" class="btn btn-default" title="开启" onclick="openStatus()">
+                                            <i class="fa fa-check"></i> 开启
                                         </button>
-                                        <button type="button" class="btn btn-default" title="屏蔽"
-                                                onclick='confirm("你确认要屏蔽吗？")'><i class="fa fa-ban"></i> 屏蔽
+                                        <button type="buttom" class="btn btn-default" title="屏蔽"
+                                                onclick="closeStatus()"><i class="fa fa-ban"></i> 屏蔽
                                         </button>
                                         <button type="button" class="btn btn-default" title="刷新"
                                                 onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新
@@ -103,8 +101,12 @@
                                 </div>
                             </div>
                             <div class="box-tools pull-right">
+                                <input type="button" value="查询" id="search" onclick="search()">
+                            </div>
+                            <div class="box-tools pull-right">
                                 <div class="has-feedback">
-                                    <input type="text" class="form-control input-sm" placeholder="搜索">
+                                    <input id="keyword" type="text" class="form-control input-sm"
+                                           placeholder="输入关键字查询产品">
                                     <span class="glyphicon glyphicon-search form-control-feedback"></span>
                                 </div>
                             </div>
@@ -116,11 +118,11 @@
                                     <th class="" style="padding-right:0px;">
                                         <input id="selall" type="checkbox" class="icheckbox_square-blue">
                                     </th>
-                                    <th class="sorting_asc">产品编号</th>
+                                    <th class="sorting_asc" onclick="orderByProductNum()">产品编号</th>
                                     <th class="sorting">产品名称</th>
                                     <th class="sorting">出发城市</th>
-                                    <th class="sorting">出发日期</th>
-                                    <th class="sorting">产品售价</th>
+                                    <th class="sorting" onclick="orderByDepartureTime()">出发日期</th>
+                                    <th class="sorting" onclick="orderByProductPrice()">产品售价</th>
                                     <th class="sorting">产品说明</th>
                                     <th class="sorting">产品状态</th>
                                     <th class="text-center">操作</th>
@@ -128,7 +130,7 @@
                                 </thead>
                                 <tbody>
 
-                                <c:forEach items="${allProduct}" var="product">
+                                <c:forEach items="${allProduct.list}" var="product">
                                     <tr>
                                         <td><input name="ids" type="checkbox" value="${product.id}" class="ids"></td>
                                         <td>${product.productNum}</td>
@@ -166,13 +168,12 @@
                 <div class="box-footer">
                     <div class="pull-left">
                         <div class="form-group form-inline">
-                            总共2 页，共14 条数据。 每页
-                            <select class="form-control">
-                                <option>10</option>
-                                <option>15</option>
-                                <option>20</option>
-                                <option>50</option>
-                                <option>80</option>
+                            总共${allProduct.pages}页，共${allProduct.total}条数据。 每页
+                            <select class="form-control" id="changePageSize" onchange="changePageSize()">
+                                <option value="1">1</option>
+                                <option value="3">3</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
                             </select> 条
                         </div>
                     </div>
@@ -180,17 +181,30 @@
                     <div class="box-tools pull-right">
                         <ul class="pagination">
                             <li>
-                                <a href="#" aria-label="Previous">首页</a>
+                                <a href="${pageContext.request.contextPath}/product/findAll?pageNum=1&pageSize=${allProduct.pageSize}"
+                                   aria-label="Previous">首页</a>
                             </li>
-                            <li><a href="#">上一页</a></li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">下一页</a></li>
                             <li>
-                                <a href="#" aria-label="Next">尾页</a>
+                                <a href="${pageContext.request.contextPath}/product/findAll?pageNum=${allProduct.pageNum-1}&pageSize=${allProduct.pageSize}">上一页</a>
+                            </li>
+                            <c:forEach begin="1" end="${allProduct.pages}" step="1" var="i">
+                                <c:if test="${i == allProduct.pageNum}">
+                                    <li class="active"><a
+                                            href="${pageContext.request.contextPath}/product/findAll?pageNum=${i}&pageSize=${allProduct.pageSize}">${i}</a>
+                                    </li>
+                                </c:if>
+                                <c:if test="${i != allProduct.pageNum}">
+                                    <li>
+                                        <a href="${pageContext.request.contextPath}/product/findAll?pageNum=${i}&pageSize=${allProduct.pageSize}">${i}</a>
+                                    </li>
+                                </c:if>
+                            </c:forEach>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/product/findAll?pageNum=${allProduct.pageNum+1}&pageSize=${allProduct.pageSize}">下一页</a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/product/findAll?pageNum=${allProduct.pages}&pageSize=${allProduct.pageSize}"
+                                   aria-label="Next">尾页</a>
                             </li>
                         </ul>
                     </div>
@@ -258,8 +272,8 @@
 <script src="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script>
     $(function () {
-        $("#delForm").submit(function () {
-            return delBatch();
+        $("#search").click(function () {
+            search();
         })
         $("#selall").click(function () {
             var c = $(this).prop("checked");
@@ -267,15 +281,81 @@
         });
     })
 
+    function orderByProductNum() {
+        var url = window.location.search;
+        var status;
+        if (url.indexOf("asc") == -1) {
+            status = "asc";
+        } else {
+            status = "desc";
+        }
+        location.href = "${pageContext.request.contextPath}/product/findAllOrderBy?orderBy=productNum "+status;
+    }
 
-    function delBatch() {
-        if(confirm("确定删除吗？")){
-            return true;
-        }else{
+    function orderByDepartureTime() {
+        var url = window.location.search;
+        var status;
+        if (url.indexOf("asc") == -1) {
+            status = "asc";
+        } else {
+            status = "desc";
+        }
+        location.href = "${pageContext.request.contextPath}/product/findAllOrderBy?orderBy=departureTime "+status;
+    }
+
+    function orderByProductPrice() {
+        var url = window.location.search;
+        var status;
+        if (url.indexOf("asc") == -1) {
+            status = "asc";
+        } else {
+            status = "desc";
+        }
+        location.href = "${pageContext.request.contextPath}/product/findAllOrderBy?orderBy=productPrice "+status;
+    }
+
+    function search() {
+        var keyword = $("#keyword").val();
+        location.href = "${pageContext.request.contextPath}/product/findByProductName?productName=" + keyword;
+    }
+
+    function openStatus() {
+        if (confirm("确定开启么？")) {
+            document.productForm.action = "${pageContext.request.contextPath}/product/openStatusById";
+            document.productForm.submit();
+        } else {
             return false;
         }
     }
+
+    function closeStatus() {
+        if (confirm("确定屏蔽么？")) {
+            document.productForm.action = "${pageContext.request.contextPath}/product/closeStatusById";
+            document.productForm.submit();
+        } else {
+            return false;
+        }
+    }
+
+    function del() {
+        if (confirm("确定删除么？")) {
+            document.productForm.action = "${pageContext.request.contextPath}/product/deleteById";
+            document.productForm.submit();
+        } else {
+            return false;
+        }
+    }
+
+    function changePageSize() {
+        var pageSize = $("#changePageSize").val(); //获取下拉框的值
+        // alert(pageSize);
+        location.href = "${pageContext.request.contextPath}/product/findAll?pageNum=1&pageSize=" + pageSize;
+    }
+
+
     $(document).ready(function () {
+        //每页条数下拉框 默认值
+        $("#changePageSize").val(${allProduct.pageSize})
         // 选择框
         $(".select2").select2();
 

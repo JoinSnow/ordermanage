@@ -1,6 +1,8 @@
 package service;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import dao.ProductDao;
 import domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +16,30 @@ public class ProductService {
     @Autowired
     private ProductDao productDao;
 
-    public List<Product> findAllProduct() {
-        List<Product> list = productDao.findAllProduct();
-        return list;
+    public PageInfo<Product> findAllProduct(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Product> allProduct = productDao.findAllProduct();
+        return new PageInfo<>(allProduct);
+    }
+
+    public PageInfo<Product> findAllProductOrderBy(int pageNum, int pageSize,String orderBy) {
+        PageHelper.startPage(pageNum, pageSize,orderBy);
+        List<Product> allProduct = productDao.findAllProduct();
+        return new PageInfo<>(allProduct);
+    }
+
+    public PageInfo<Product> findByProductName(int pageNum, int pageSize, String productName) {
+        PageHelper.startPage(pageNum, pageSize);
+        productName = "%" + productName + "%";
+        List<Product> allProduct = productDao.findByProductName(productName);
+        return new PageInfo<>(allProduct);
     }
 
     public void add(Product product) {
         if (product.getProductNum() != null && product.getProductNum() != " ") {
-            List<Product> allProduct = findAllProduct();
+            PageInfo<Product> allProduct = findAllProduct(1, 5);
             boolean b = true;
-            for (Product product1 : allProduct) {
+            for (Product product1 : allProduct.getList()) {
                 if (product.getProductNum().equals(product1.getProductNum())) {
                     b = false;
                 }
@@ -44,8 +60,27 @@ public class ProductService {
     }
 
     public void deleteById(String[] ids) {
-        for (String id:ids) {
+        for (String id : ids) {
             productDao.deleteById(id);
         }
     }
+
+    public void openStatusById(String[] ids) {
+        Product product = new Product();
+        for (String id : ids) {
+            product.setId(id);
+            product.setProductStatus(1);
+            productDao.updateStatus(product);
+        }
+    }
+
+    public void closeStatusById(String[] ids) {
+        Product product = new Product();
+        for (String id : ids) {
+            product.setId(id);
+            product.setProductStatus(0);
+            productDao.updateStatus(product);
+        }
+    }
+
 }

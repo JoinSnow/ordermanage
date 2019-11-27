@@ -49,7 +49,7 @@
                         </a>
                     </li>
                     <li id="order-cancel">
-                        <a href="all-order-cancel-list.html">
+                        <a href="${pageContext.request.contextPath}/orders/findAll">
                             <i class="fa fa-circle-o"></i>订单管理
                         </a>
                     </li>
