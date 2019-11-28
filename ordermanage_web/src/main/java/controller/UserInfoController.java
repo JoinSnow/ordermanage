@@ -31,4 +31,13 @@ public class UserInfoController {
         userInfoService.add(userInfo);
         return "redirect:/user/findAll";
     }
+
+    @RequestMapping("/findById")
+    public ModelAndView findById(String id) {
+        UserInfo user = userInfoService.findById(id);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.getModelMap().addAttribute("user", user);
+        modelAndView.setViewName("user_show");
+        return modelAndView;
+    }
 }

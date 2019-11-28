@@ -21,5 +21,12 @@ public interface UserInfoDao {
     List<UserInfo> findAll();
 
     @Insert("insert into user_info values(#{id},#{username},#{password},#{email},#{phoneNum},#{status})")
-    void add(UserInfo userInfo);
+    void add(UserInfo userInfo0);
+
+    @Select("select * from user_info where id=#{id}")
+    @Results({
+            @Result(id = true, property = "id", column = "id"),
+            @Result(property = "roles", column = "id", many = @Many(select = "dao.RoleDao.findRolesByUserId"))
+    })
+    UserInfo findById(String id);
 }

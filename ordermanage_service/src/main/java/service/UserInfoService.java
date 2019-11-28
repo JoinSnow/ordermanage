@@ -38,7 +38,8 @@ public class UserInfoService implements UserDetailsService {
             list.add(new SimpleGrantedAuthority(role.getRoleName()));
         }
         User user = new User(userInfo.getUsername(),
-                "{noop}" + userInfo.getPassword(),
+//                "{noop}" + userInfo.getPassword(),
+                userInfo.getPassword(),
                 userInfo.getStatus() == 1 ? true : false,
                 true,
                 true,
@@ -54,5 +55,9 @@ public class UserInfoService implements UserDetailsService {
         userInfo.setId(UUID.randomUUID().toString());
         userInfo.setPassword(encoder.encode(userInfo.getPassword()));
         userInfoDao.add(userInfo);
+    }
+
+    public UserInfo findById(String id){
+        return userInfoDao.findById(id);
     }
 }
