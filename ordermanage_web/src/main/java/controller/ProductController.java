@@ -8,14 +8,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import service.ProductService;
 
+
 import java.io.UnsupportedEncodingException;
-import java.util.List;
+
 
 @Controller
 @RequestMapping("/product")
+@SessionAttributes("allProduct")
 public class ProductController {
     @Autowired
     private ProductService productService;
@@ -30,25 +33,25 @@ public class ProductController {
     }
 
     @RequestMapping("/findAllOrderBy")
-    public ModelAndView findAllOrderBy(String orderBy,@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "5") int pageSize) {
+    public ModelAndView findAllOrderBy(String orderBy, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "5") int pageSize) {
         ModelAndView modelAndView = new ModelAndView();
-        PageInfo<Product> allProduct = productService.findAllProductOrderBy(pageNum, pageSize,orderBy);
+        PageInfo<Product> allProduct = productService.findAllProductOrderBy(pageNum, pageSize, orderBy);
         modelAndView.getModelMap().addAttribute("allProduct", allProduct);
         modelAndView.setViewName("product_manage");
         return modelAndView;
     }
 
     @RequestMapping("/findByProductName")
-    public ModelAndView findByProductName(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "5") int pageSize,String productName) {
+    public ModelAndView findByProductName(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "5") int pageSize, String productName) {
         try {
-            productName=new String(productName.getBytes("ISO-8859-1"),"utf-8");
-        }catch (NullPointerException e){
+            productName = new String(productName.getBytes("ISO-8859-1"), "utf-8");
+        } catch (NullPointerException e) {
             e.printStackTrace();
-        } catch(UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         ModelAndView modelAndView = new ModelAndView();
-        PageInfo<Product> allProduct = productService.findByProductName(pageNum, pageSize,productName);
+        PageInfo<Product> allProduct = productService.findByProductName(pageNum, pageSize, productName);
         modelAndView.getModelMap().addAttribute("allProduct", allProduct);
         modelAndView.setViewName("product_manage");
         return modelAndView;

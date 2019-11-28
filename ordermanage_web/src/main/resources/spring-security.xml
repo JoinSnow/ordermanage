@@ -35,4 +35,6 @@
         <!-- spring security 通过调用 UserService的方法获取User对象进行认证 -->
         <security:authentication-provider user-service-ref="userInfoService"></security:authentication-provider>
     </security:authentication-manager>
+    <!-- 配置一个自带加密器 -->
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 </beans>

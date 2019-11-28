@@ -9,15 +9,19 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserInfoService implements UserDetailsService {
     @Autowired
     private UserInfoDao userInfoDao;
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -41,5 +45,14 @@ public class UserInfoService implements UserDetailsService {
                 true,
                 list);
         return user;
+    }
+    public List<UserInfo> findAll(){
+        return userInfoDao.findAll();
+    }
+
+    public void add(UserInfo userInfo){
+        userInfo.setId(UUID.randomUUID().toString());
+        userInfo.setPassword(encoder.encode(userInfo.getPassword()));
+        userInfoDao.add(userInfo);
     }
 }

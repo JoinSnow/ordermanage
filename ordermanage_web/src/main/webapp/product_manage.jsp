@@ -82,7 +82,7 @@
                                 <div class="form-group form-inline">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default" title="新建"
-                                                onclick='location.href="/products-add.jsp"'><i class="fa fa-file-o"></i>
+                                                onclick='location.href="/product_add.jsp"'><i class="fa fa-file-o"></i>
                                             新增
                                         </button>
                                         <button type="buttom" class="btn btn-default" title="删除" onclick="del()"><i

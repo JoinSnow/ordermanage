@@ -28,7 +28,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li id="user-setting">
-                        <a href="all-system-setting-edit.html">
+                        <a href="${pageContext.request.contextPath}/user/findAll">
                             <i class="fa fa-circle-o"></i>用户管理
                         </a>
                     </li>
