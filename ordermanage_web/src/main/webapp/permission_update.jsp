@@ -5,7 +5,7 @@
     <!-- 页面meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>修改产品</title>
+    <title>修改权限</title>
     <meta name="description" content="首页">
     <meta name="keywords" content="首页">
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
@@ -58,80 +58,39 @@
         <!-- 内容头部 -->
         <section class="content-header">
             <h1>
-                产品管理
-                <small>修改产品</small>
+                权限管理
+                <small>修改权限</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="all-admin-index.html"><i class="fa fa-dashboard"></i> 首页</a></li>
-                <li><a href="${pageContext.request.contextPath}/product_manage.jsp">产品管理</a></li>
-                <li class="active">修改产品</li>
+                <li><a href="${pageContext.request.contextPath}/product_manage.jsp">权限管理</a></li>
+                <li class="active">修改权限</li>
             </ol>
         </section>
         <!-- 内容头部 /-->
         <!-- 正文区域 -->
         <section class="content">
-            <form action="${pageContext.request.contextPath}/product/updateById" method="post">
+            <form action="${pageContext.request.contextPath}/permission/updateById" method="post">
                 <!--订单信息-->
                 <div class="panel panel-default">
-                    <div class="panel-heading">产品信息</div>
-                    <input value="${product.id}" name="id" type="hidden">
+                    <div class="panel-heading">权限信息</div>
+                    <input value="${permission.id}" name="id" type="hidden">
                     <div class="row data-type">
-                        <div class="col-md-2 title">产品编号</div>
+                        <div class="col-md-2 title">权限名</div>
                         <div class="col-md-4 data">
-                            <input type="text" class="form-control" value="${product.productNum}"
-                                   name="productNum"
-                                   readonly>
+                            <input type="text" class="form-control" placeholder="${permission.permissionName}"
+                                   name="permissionName">
                         </div>
-                        <div class="col-md-2 title">路线名称</div>
+                        <div class="col-md-2 title">权限路径</div>
                         <div class="col-md-4 data">
-                            <input type="text" class="form-control" value="${product.productName}"
-                                   name="productName"
-                            >
+                            <input type="text" class="form-control" placeholder="${permission.url}"
+                                   name="url">
                         </div>
-                        <div class="col-md-2 title">出发城市</div>
-                        <div class="col-md-4 data">
-                            <select class="form-control select2" style="width: 100%;" name="cityName">
-                                <option value="哥谭" selected="selected">哥谭</option>
-                                <option value="北京">北京</option>
-                                <option value="上海">上海</option>
-                                <option value="杭州">杭州</option>
-                                <option value="苏州">苏州</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2 title">出发时间</div>
-                        <div class="col-md-4 data">
-                            <div class="input-group date">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                <input type="text" class="form-control pull-right" id="datepicker-a6"
-                                       name="departureTime" value="<fmt:formatDate value='${product.departureTime}' pattern='yyyy-MM-dd'/>">
-                            </div>
-                        </div>
-                        <div class="col-md-2 title">产品价格</div>
-                        <div class="col-md-4 data">
-                            <input type="text" class="form-control" value="${product.productPrice}"
-                                   name="productPrice"
-                            >
-                        </div>
-                        <div class="col-md-2 title">产品状态</div>
-                        <div class="col-md-4 data">
-                            <select class="form-control select2" style="width: 100%;" name="productStatus">
-                                <option value="1" selected="selected">开启</option>
-                                <option value="0">关闭</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2 title rowHeight2x">产品描述</div>
-                        <div class="col-md-10 data rowHeight2x">
-                            <textarea class="form-control" rows="3" placeholder="${product.productDesc}"
-                                      name="productDesc"></textarea>
-                        </div>
-
                     </div>
                 </div>
                 <!--工具栏-->
                 <div class="box-tools text-center">
-                    <input type="submit" class="btn bg-maroon" value="修改"/>
+                    <input type="submit" class="btn bg-maroon" value="提交修改"/>
                     <button type="button" class="btn bg-default" onclick="history.back(-1);">返回</button>
                 </div>
                 <!--工具栏/-->

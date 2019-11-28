@@ -8,9 +8,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>角色管理</title>
-    <meta name="description" content="角色管理">
-    <meta name="keywords" content="角色管理">
+    <title>会员管理</title>
+    <meta name="description" content="会员管理">
+    <meta name="keywords" content="会员管理">
 
     <!-- Tell the browser to be responsive to screen width -->
     <meta
@@ -73,16 +73,16 @@
         <!-- 内容头部 -->
         <section class="content-header">
             <h1>
-                角色管理
-                <small>全部角色</small>
+                会员管理
+                <small>全部会员</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="${pageContext.request.contextPath}/index.jsp"><i
                         class="fa fa-dashboard"></i> 首页</a></li>
                 <li><a
-                        href="${pageContext.request.contextPath}/user/findAll.do">角色管理</a></li>
+                        href="${pageContext.request.contextPath}/user/findAll.do">会员管理</a></li>
 
-                <li class="active">全部角色</li>
+                <li class="active">全部会员</li>
             </ol>
         </section>
         <!-- 内容头部 /-->
@@ -104,7 +104,7 @@
                             <div class="form-group form-inline">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default" title="新建"
-                                            onclick="location.href='${pageContext.request.contextPath}/role_add.jsp'">
+                                            onclick="location.href='${pageContext.request.contextPath}/user_add.jsp'">
                                         <i class="fa fa-file-o"></i> 新建
                                     </button>
 
@@ -131,23 +131,25 @@
                                 <th class="" style="padding-right: 0px"><input
                                         id="selall" type="checkbox" class="icheckbox_square-blue">
                                 </th>
-                                <th class="sorting_desc">角色名</th>
-                                <th class="sorting">描述</th>
+                                <th class="sorting_desc">会员名</th>
+                                <th class="sorting_asc sorting_asc_disabled">昵称</th>
+                                <th class="sorting_desc sorting_desc_disabled">联系电话</th>
+                                <th class="sorting">邮箱</th>
                                 <th class="text-center">操作</th>
                             </tr>
                             </thead>
                             <tbody>
 
-                            <c:forEach items="${roles}" var="role">
+                            <c:forEach items="${members}" var="member">
                                 <tr>
                                     <td><input name="ids" type="checkbox"></td>
-                                    <td>${role.roleName}</td>
-                                    <td>${role.roleDesc}</td>
+                                    <td>${member.name }</td>
+                                    <td>${member.nickname }</td>
+                                    <td>${member.phoneNum}</td>
+                                    <td>${member.email}</td>
                                     <td class="text-center">
-                                        <a href="${pageContext.request.contextPath}/role/findById?id=${role.id}"
+                                        <a href="${pageContext.request.contextPath}/member/findById?id=${member.id}"
                                            class="btn bg-olive btn-xs">详情</a>
-                                        <a href="${pageContext.request.contextPath}/role_update.jsp?roleId=${role.id}&roleName=${role.roleName}&roleDesc=${role.roleDesc}"
-                                           class="btn bg-olive btn-xs">编辑</a>
                                     </td>
                                 </tr>
                             </c:forEach>

@@ -22,7 +22,15 @@ public class RoleService {
         roleDao.add(role);
     }
 
-    public List<Role> findOtherByUserId(String userId){
+    public List<Role> findOtherByUserId(String userId) {
         return roleDao.findOtherByUserId(userId);
+    }
+
+    public Role findById(String id){
+        return roleDao.findById(id);
+    }
+
+    public void updateById(Role role){
+        roleDao.updateById(role);
     }
 }

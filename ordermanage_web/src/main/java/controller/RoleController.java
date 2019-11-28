@@ -40,4 +40,18 @@ public class RoleController {
         modelAndView.setViewName("user_role_add");
         return modelAndView;
     }
+
+    @RequestMapping("/findById")
+    public ModelAndView findById(String id) {
+        Role role = roleService.findById(id);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.getModelMap().addAttribute("role", role);
+        modelAndView.setViewName("role_show");
+        return modelAndView;
+    }
+    @RequestMapping("/updateById")
+    public String updateById(Role role){
+        roleService.updateById(role);
+        return "redirect:/role/findAll";
+    }
 }

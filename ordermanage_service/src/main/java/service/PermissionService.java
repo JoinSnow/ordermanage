@@ -23,4 +23,12 @@ public class PermissionService {
         permission.setId(UUID.randomUUID().toString());
         permissionDao.add(permission);
     }
+
+    public void updateById(Permission permission){
+        permissionDao.updateById(permission);
+    }
+
+    public Permission findById(String id){
+        return permissionDao.findById(id);
+    }
 }

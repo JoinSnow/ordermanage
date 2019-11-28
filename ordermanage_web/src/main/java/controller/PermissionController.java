@@ -32,4 +32,18 @@ public class PermissionController {
         permissionService.add(permission);
         return "redirect:/permission/findAll";
     }
+
+    @RequestMapping("/findById")
+    public ModelAndView findById(String id){
+        Permission permission = permissionService.findById(id);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.getModelMap().addAttribute("permission",permission);
+        modelAndView.setViewName("permission_update");
+        return modelAndView;
+    }
+    @RequestMapping("/updateById")
+    public String updateById(Permission permission){
+        permissionService.updateById(permission);
+        return "redirect:/permission/findAll";
+    }
 }

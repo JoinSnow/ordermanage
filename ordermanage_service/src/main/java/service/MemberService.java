@@ -15,4 +15,8 @@ public class MemberService {
     public List<Member> findAll(){
         return memberDao.findAll();
     }
+
+    public Member findById(String id){
+        return memberDao.findById(id);
+    }
 }

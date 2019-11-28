@@ -3,6 +3,7 @@ package dao;
 import domain.Permission;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,4 +18,10 @@ public interface PermissionDao {
 
     @Insert("insert into permission values(#{id},#{permissionName},#{url})")
     void add(Permission permission);
+
+    @Update("update permission set permissionName=#{permissionName},url=#{url} where id=#{id}")
+    void updateById(Permission permission);
+
+    @Select("select * from permission where id=#{id}")
+    Permission findById(String id);
 }

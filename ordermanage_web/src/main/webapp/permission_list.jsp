@@ -142,8 +142,8 @@
 											<td>${permission.permissionName}</td>
 											<td>${permission.url}</td>
 											<td class="text-center">
-												<a href="${pageContext.request.contextPath}/user/findById?id=${user.id}" class="btn bg-olive btn-xs">详情</a>
-												<a href="${pageContext.request.contextPath}/user/findUserByIdAndAllRole.do?id=${user.id}" class="btn bg-olive btn-xs">添加角色</a>
+												<a href="${pageContext.request.contextPath}/permission/findById?id=${permission.id}" class="btn bg-olive btn-xs">编辑</a>
+
 											</td>
 										</tr>
 									</c:forEach>

@@ -32,4 +32,7 @@ public interface UserInfoDao {
 
     @Insert("insert into user_role values(#{userId},#{roleId})")
     void addRoleToUser(@Param("userId") String userId,@Param("roleId")String roleId);
+
+    @Select("SELECT * FROM user_info WHERE id IN(SELECT userId FROM user_role WHERE roleId =#{roleId})")
+    List<UserInfo> findByRoleId(String roleId);
 }

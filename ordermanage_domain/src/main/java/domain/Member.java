@@ -1,11 +1,22 @@
 package domain;
 
+import java.util.List;
+
 public class Member {
     private String id;
     private String name;
     private String nickname;
     private String phoneNum;
     private String email;
+    private List<Traveller> travellers;
+
+    public List<Traveller> getTravellers() {
+        return travellers;
+    }
+
+    public void setTravellers(List<Traveller> travellers) {
+        this.travellers = travellers;
+    }
 
     public String getId() {
         return id;

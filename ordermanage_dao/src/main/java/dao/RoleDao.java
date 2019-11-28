@@ -23,4 +23,15 @@ public interface RoleDao {
 
     @Select("SELECT * FROM role WHERE id NOT IN(SELECT roleId FROM user_role WHERE userId=#{userId})")
     List<Role> findOtherByUserId(String userId);
+
+    @Select("select * from role where id=#{id}")
+    @Results({
+            @Result(id = true, property = "id", column = "id"),
+            @Result(property = "users", column = "id", many = @Many(select = "dao.UserInfoDao.findByRoleId")),
+            @Result(property = "permissions", column = "id", many = @Many(select = "dao.PermissionDao.findByRoleId"))
+    })
+    Role findById(String id);
+
+    @Update("update role set roleName=#{roleName},roleDesc=#{roleDesc} where id=#{id}")
+    void updateById(Role role);
 }
