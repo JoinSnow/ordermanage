@@ -1,10 +1,7 @@
 package dao;
 
 import domain.Role;
-import org.apache.ibatis.annotations.Many;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,4 +14,13 @@ public interface RoleDao {
             @Result(property = "permissions",column = "id",many = @Many(select = "dao.PermissionDao.findByRoleId"))
     })
     List<Role> findRolesByUserId(String id);
+
+    @Select("select * from role")
+    List<Role> findAll();
+
+    @Insert("insert into role values(#{id},#{roleName},#{roleDesc})")
+    void add(Role role);
+
+    @Select("SELECT * FROM role WHERE id NOT IN(SELECT roleId FROM user_role WHERE userId=#{userId})")
+    List<Role> findOtherByUserId(String userId);
 }

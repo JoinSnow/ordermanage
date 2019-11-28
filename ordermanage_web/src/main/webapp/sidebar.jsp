@@ -32,6 +32,16 @@
                             <i class="fa fa-circle-o"></i>用户管理
                         </a>
                     </li>
+                    <li id="role-setting">
+                        <a href="${pageContext.request.contextPath}/role/findAll">
+                            <i class="fa fa-circle-o"></i>角色管理
+                        </a>
+                    </li>
+                    <li id="permission-setting">
+                        <a href="${pageContext.request.contextPath}/permission/findAll">
+                            <i class="fa fa-circle-o"></i>角色权限管理
+                        </a>
+                    </li>
                 </ul>
             </li>
 

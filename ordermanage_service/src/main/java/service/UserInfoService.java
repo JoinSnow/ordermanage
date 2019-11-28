@@ -3,10 +3,11 @@ package service;
 import dao.UserInfoDao;
 import domain.Role;
 import domain.UserInfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -59,5 +60,9 @@ public class UserInfoService implements UserDetailsService {
 
     public UserInfo findById(String id){
         return userInfoDao.findById(id);
+    }
+
+    public void addRoleToUser(String userId, String roleId){
+        userInfoDao.addRoleToUser(userId,roleId);
     }
 }

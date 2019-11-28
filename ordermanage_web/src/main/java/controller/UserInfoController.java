@@ -40,4 +40,13 @@ public class UserInfoController {
         modelAndView.setViewName("user_show");
         return modelAndView;
     }
+
+
+    @RequestMapping("/addRoleToUser")
+    public String addRoleToUser(String userId, String[] roleIds) {
+        for (String roleId:roleIds) {
+            userInfoService.addRoleToUser(userId,roleId);
+        }
+        return "redirect:/user/findAll";
+    }
 }

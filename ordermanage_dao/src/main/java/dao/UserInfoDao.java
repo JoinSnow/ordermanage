@@ -29,4 +29,7 @@ public interface UserInfoDao {
             @Result(property = "roles", column = "id", many = @Many(select = "dao.RoleDao.findRolesByUserId"))
     })
     UserInfo findById(String id);
+
+    @Insert("insert into user_role values(#{userId},#{roleId})")
+    void addRoleToUser(@Param("userId") String userId,@Param("roleId")String roleId);
 }
