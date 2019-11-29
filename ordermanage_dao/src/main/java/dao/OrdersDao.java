@@ -23,4 +23,16 @@ public interface OrdersDao {
             @Result(property = "member", column = "memberId", one = @One(select = "dao.MemberDao.findById"))
     })
     Orders findById(String id);
+
+    @Insert("insert into orders values(#{orders.id},#{orders.orderNum},#{orders.orderTime},#{orders.peopleCount},#{orders.orderDesc},0,#{orders.orderStatus},#{productId},#{memberId})")
+    void add(@Param("orders") Orders orders, @Param("productId") String productId, @Param("memberId") String memberId);
+
+    @Select("SELECT MAX(orderNum) FROM orders")
+    String findMaxOrderNum();
+
+    @Update("update orders set orderStatus=1 where id=#{id}")
+    void pay(String id);
+
+    @Delete("delete from orders where id=#{id}")
+    void del(String id);
 }

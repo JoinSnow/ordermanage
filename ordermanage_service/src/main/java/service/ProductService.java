@@ -16,6 +16,10 @@ public class ProductService {
     @Autowired
     private ProductDao productDao;
 
+    public List<Product> findAllNoPage(){
+        return productDao.findAllProduct();
+    }
+
     public PageInfo<Product> findAllProduct(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Product> allProduct = productDao.findAllProduct();

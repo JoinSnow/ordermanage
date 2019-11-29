@@ -160,12 +160,13 @@
                                     <td>${orders.orderTimeStr }</td>
                                     <td class="text-center">${orders.orderStatusStr }</td>
                                     <td class="text-center">
-                                        <button type="button" class="btn bg-olive btn-xs">订单</button>
+                                        <c:if test="${orders.orderStatus==0}">
+                                            <button type="button" class="btn bg-olive btn-xs" onclick="location.href='${pageContext.request.contextPath}/orders/pay?id=${orders.id}'">付款</button>
+                                        </c:if>
                                         <button type="button" class="btn bg-olive btn-xs"
                                                 onclick="location.href='${pageContext.request.contextPath}/orders/info?id=${orders.id}'">
                                             详情
                                         </button>
-                                        <button type="button" class="btn bg-olive btn-xs">编辑</button>
                                     </td>
                                 </tr>
                             </c:forEach>
