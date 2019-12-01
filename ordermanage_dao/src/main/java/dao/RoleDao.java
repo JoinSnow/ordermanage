@@ -20,7 +20,7 @@ public interface RoleDao {
 
     @Insert("insert into role values(#{id},#{roleName},#{roleDesc})")
     void add(Role role);
-
+    //根据userid查询用户没有的角色
     @Select("SELECT * FROM role WHERE id NOT IN(SELECT roleId FROM user_role WHERE userId=#{userId})")
     List<Role> findOtherByUserId(String userId);
 
@@ -34,4 +34,8 @@ public interface RoleDao {
 
     @Update("update role set roleName=#{roleName},roleDesc=#{roleDesc} where id=#{id}")
     void updateById(Role role);
+
+    //给角色添加权限
+    @Insert("insert into role_permission values(#{roleId},#{permissionId})")
+    void addPermission(@Param("roleId") String roleId,@Param("permissionId") String permissionId);
 }

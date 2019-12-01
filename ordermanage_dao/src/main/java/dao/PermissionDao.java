@@ -24,4 +24,8 @@ public interface PermissionDao {
 
     @Select("select * from permission where id=#{id}")
     Permission findById(String id);
+
+    //根据roleid查询角色没有的权限
+    @Select("select * from permission where id not in(select permissionId from role_permission where roleId=#{roleId})")
+    List<Permission> findOtherByRoleId(String roleId);
 }

@@ -3,12 +3,14 @@ package controller;
 
 import domain.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import service.UserInfoService;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @Controller
@@ -18,7 +20,9 @@ public class UserInfoController {
     private UserInfoService userInfoService;
 
     @RequestMapping("/findAll")
+    @Secured({"ROLE_USER"})
     public ModelAndView findAll() {
+        int i=1/0;
         List<UserInfo> users = userInfoService.findAll();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.getModelMap().addAttribute("users", users);
@@ -33,6 +37,7 @@ public class UserInfoController {
     }
 
     @RequestMapping("/findById")
+    @RolesAllowed({"ROLE_USER"})
     public ModelAndView findById(String id) {
         UserInfo user = userInfoService.findById(id);
         ModelAndView modelAndView = new ModelAndView();

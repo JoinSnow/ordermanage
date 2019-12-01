@@ -15,7 +15,7 @@
 	    http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- 扫描包 -->
-    <context:component-scan base-package="controller"/>
+    <context:component-scan base-package="controller,aop"/>
 
     <!-- 配置视图解析器 -->
     <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -52,8 +52,8 @@
         <!--</mvc:interceptor>-->
     <!--</mvc:interceptors>-->
 
-    <!-- 注册异常处理器 -->
-    <!--<bean class="exception.MyExceptionResolver"></bean>-->
+     <!--注册异常处理器 -->
+    <bean class="exception.MyExceptionResolver"></bean>
 
     <!-- 注解支持AOP配置 -->
     <aop:aspectj-autoproxy />

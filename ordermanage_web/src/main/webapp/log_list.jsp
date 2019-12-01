@@ -7,15 +7,15 @@
     <!-- 页面meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>订单管理</title>
-    <meta name="description" content="订单管理">
-    <meta name="keywords" content="订单管理">
+
+    <title>日志</title>
+    <meta name="description" content="日志">
+    <meta name="keywords" content="日志">
 
     <!-- Tell the browser to be responsive to screen width -->
     <meta
             content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
             name="viewport">
-
 
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/plugins/bootstrap/css/bootstrap.min.css">
@@ -63,7 +63,7 @@
           href="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.css">
 </head>
 
-<body class="hold-transition skin-purple sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini">
 
 <div class="wrapper">
     <!-- 页面头部 -->
@@ -72,76 +72,183 @@
     <jsp:include page="sidebar.jsp"></jsp:include>
     <!-- 内容区域 -->
     <div class="content-wrapper">
-
         <!-- 内容头部 -->
         <section class="content-header">
             <h1>
-                订单管理
-                <small>新增订单</small>
+                日志管理
+                <small>全部日志</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="${pageContext.request.contextPath}/index.jsp"><i
                         class="fa fa-dashboard"></i> 首页</a></li>
                 <li><a
-                        href="${pageContext.request.contextPath}/user/findAll.do">订单管理</a></li>
-                <li class="active">新增订单</li>
+                        href="${pageContext.request.contextPath}/sysLog/findAll.do">日志管理</a></li>
+
+                <li class="active">全部日志</li>
             </ol>
         </section>
         <!-- 内容头部 /-->
 
-        <form action="${pageContext.request.contextPath}/orders/add"
-              method="post">
-            <!-- 正文区域 -->
-            <section class="content"> <!--产品信息-->
+        <!-- 正文区域 -->
+        <section class="content"> <!-- .box-body -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">列表</h3>
+                </div>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">订单信息</div>
-                    <div class="row data-type">
-                        <div class="col-md-2 title">选择产品</div>
-                        <div class="col-md-4 data">
-                            <select class="form-control select2" style="width: 100%" name="productId">
-                                <c:forEach items="${products}" var="product">
-                                    <option value="${product.id}">${product.productName}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                        <div class="col-md-2 title">选择会员</div>
-                        <div class="col-md-4 data">
-                            <select class="form-control select2" style="width: 100%" name="memberId" id="memberId" onchange="findTravellers()">
-                                <c:forEach items="${members}" var="member">
-                                    <option value="${member.id}">${member.name}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                        <div class="col-md-2 title">选择游客</div>
-                        <div class="col-md-4 data">
-                            <select class="form-control select2" style="width: 100%" name="travellerIds" multiple="multiple" id="travellers">
+                <div class="box-body">
 
-                            </select>
+                    <!-- 数据表格 -->
+                    <div class="table-box">
+
+                        <!--工具栏-->
+                        <div class="pull-left">
+                            <div class="form-group form-inline">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default" title="刷新"
+                                            onclick="window.location.reload();">
+                                        <i class="fa fa-refresh"></i> 刷新
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-2 title">订单描述</div>
-                        <div class="col-md-4 data">
-                            <input type="text" class="form-control" placeholder="订单描述" name="orderDesc">
+                        <div class="box-tools pull-right">
+                            <div class="has-feedback">
+                                <input type="text" class="form-control input-sm"
+                                       placeholder="搜索"> <span
+                                    class="glyphicon glyphicon-search form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <!--工具栏/-->
+
+                        <!--数据列表-->
+                        <table id="dataList"
+                               class="table table-bordered table-striped table-hover dataTable">
+                            <thead>
+                            <tr>
+                                <th class="" style="padding-right: 0px"><input id="selall"
+                                                                               type="checkbox"
+                                                                               class="icheckbox_square-blue"></th>
+                                <th class="sorting">访问时间</th>
+                                <th class="sorting">访问用户</th>
+                                <th class="sorting">访问IP</th>
+                                <th class="sorting">资源URL</th>
+                                <th class="sorting">执行时间</th>
+                                <th class="sorting">访问方法</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${logs.list}" var="log">
+                                <tr>
+                                    <td><input name="ids" type="checkbox"></td>
+                                    <td>${log.visitTimeStr }</td>
+                                    <td>${log.username}</td>
+                                    <td>${log.ip}</td>
+                                    <td>${log.url}</td>
+                                    <td>${log.executionTime}毫秒</td>
+                                    <td>${log.method}</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+
+                        </table>
+                        <!--数据列表/-->
+
+                        <!--工具栏-->
+                        <div class="pull-left">
+                            <div class="form-group form-inline">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default" title="刷新"
+                                            onclick="window.location.reload();">
+                                        <i class="fa fa-refresh"></i> 刷新
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-tools pull-right">
+                            <div class="has-feedback">
+                                <input type="text" class="form-control input-sm"
+                                       placeholder="搜索"> <span
+                                    class="glyphicon glyphicon-search form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <!--工具栏/-->
+
+
+                    </div>
+                    <!-- 数据表格 /-->
+
+                </div>
+                <!-- /.box-body -->
+
+                <!-- .box-footer-->
+                <div class="box-footer">
+                    <div class="pull-left">
+                        <div class="form-group form-inline">
+                            总共${logs.pages}页，共${logs.total}条数据。 每页
+                            <select class="form-control" id="changePageSize" onchange="changePageSize()">
+                                <option value="3">3</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                            </select> 条
                         </div>
                     </div>
+
+                    <div class="box-tools pull-right">
+                        <ul class="pagination">
+                            <li>
+                                <a href="${pageContext.request.contextPath}/log/all?pageNum=1&pageSize=${logs.pageSize}"
+                                   aria-label="Previous">首页</a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/log/all?pageNum=${logs.pageNum-1}&pageSize=${logs.pageSize}">上一页</a>
+                            </li>
+                            <c:forEach begin="1" end="${logs.pages}" step="1" var="i">
+                                <c:if test="${i == logs.pageNum}">
+                                    <li class="active"><a
+                                            href="${pageContext.request.contextPath}/log/all?pageNum=${i}&pageSize=${logs.pageSize}">${i}</a>
+                                    </li>
+                                </c:if>
+                                <c:if test="${i != logs.pageNum}">
+                                    <li>
+                                        <a href="${pageContext.request.contextPath}/log/all?pageNum=${i}&pageSize=${logs.pageSize}">${i}</a>
+                                    </li>
+                                </c:if>
+                            </c:forEach>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/log/all?pageNum=${logs.pageNum+1}&pageSize=${logs.pageSize}">下一页</a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/log/all?pageNum=${logs.pages}&pageSize=${logs.pageSize}"
+                                   aria-label="Next">尾页</a>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
-                <!--订单信息/--> <!--工具栏-->
-                <div class="box-tools text-center">
-                    <button type="submit" class="btn bg-maroon">新增订单</button>
-                    <button type="button" class="btn bg-default"
-                            onclick="history.back(-1);">返回
-                    </button>
-                </div>
-                <!--工具栏/--> </section>
-            <!-- 正文区域 /-->
-        </form>
+                <!-- /.box-footer-->
+
+            </div>
+
+        </section>
+        <!-- 正文区域 /-->
+
     </div>
     <!-- 内容区域 /-->
+
     <!-- 底部导航 -->
     <footer class="main-footer">
-        <jsp:include page="footer.jsp"></jsp:include>
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 1.0.8
+        </div>
+        <strong>Copyright &copy; 2014-2017 <a
+                href="http://www.itcast.cn">研究院研发部</a>.
+        </strong> All rights reserved.
     </footer>
+    <!-- 底部导航 /-->
+
 </div>
+
 <script
         src="${pageContext.request.contextPath}/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script
@@ -230,6 +337,9 @@
 
 <script>
     $(document).ready(function () {
+        //每页条数下拉框 默认值
+        $("#changePageSize").val(${logs.pageSize})
+
         // 选择框
         $(".select2").select2();
 
@@ -239,38 +349,6 @@
         });
     });
 
-    function findTravellers() {
-        $.ajax({
-            url: "/traveller/findByMemberId?memberId=" + $("#memberId").val(),
-            type: "get",
-            dataType: "json",
-            success: function (data) {
-                $("#travellers").empty();
-                for (i = 0; i < data.length; i++) {
-                    $("#travellers").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
-                    console.log('<option value="' + data[i].id + '">' + data[i].name + '</option>')
-                }
-            }
-        })
-    }
-
-    // function findTravellers() {
-    //     var memberId = $("#member").val();
-    //
-    //     $.ajax({
-    //         "url":"/traveller/findByMemberId",
-    //         "data":memberId,
-    //         "type":"post",
-    //         "dataType":"json",
-    //         "success":function (data) {
-    //             alert(data);
-    //         for (i = 0; i < data.length; i++) {
-    //             $("#travellers").append('<option value= + ' + data[i].id + '>'+data[i].name+'</option>');
-    //             console.log(data[i].name)
-    //         }
-    //     }
-    // })
-    // }
     // 设置激活菜单
     function setSidebarActive(tagUri) {
         var liObj = $("#" + tagUri);
@@ -279,9 +357,35 @@
             liObj.addClass("active");
         }
     }
+
+    function changePageSize() {
+        var pageSize = $("#changePageSize").val(); //获取下拉框的值
+        // alert(pageSize);
+        location.href = "${pageContext.request.contextPath}/log/all?pageNum=1&pageSize=" + pageSize;
+    }
+
+    $(document).ready(function () {
+
+        // 激活导航位置
+        setSidebarActive("order-manage");
+
+        // 列表按钮
+        $("#dataList td input[type='checkbox']").iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            increaseArea: '20%'
+        });
+        // 全选操作
+        $("#selall").click(function () {
+            var clicks = $(this).is(':checked');
+            if (!clicks) {
+                $("#dataList td input[type='checkbox']").iCheck("uncheck");
+            } else {
+                $("#dataList td input[type='checkbox']").iCheck("check");
+            }
+            $(this).data("clicks", !clicks);
+        });
+    });
 </script>
-
-
 </body>
 
 </html>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -147,7 +148,9 @@
 											<td>${user.statusStr }</td>											
 											<td class="text-center">
 												<a href="${pageContext.request.contextPath}/user/findById?id=${user.id}" class="btn bg-olive btn-xs">详情</a>
+												<security:authorize access="hasAnyRole({'ROLE_ROOT'})">
 												<a href="${pageContext.request.contextPath}/role/findOtherByUserId?userId=${user.id}" class="btn bg-olive btn-xs">添加角色</a>
+												</security:authorize>
 											</td>
 										</tr>
 									</c:forEach>

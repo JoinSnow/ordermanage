@@ -33,4 +33,9 @@ public class RoleService {
     public void updateById(Role role){
         roleDao.updateById(role);
     }
+
+    //给角色添加权限
+    public void addPermission(String roleId,String permissionId){
+        roleDao.addPermission(roleId,permissionId);
+    }
 }

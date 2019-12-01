@@ -46,4 +46,15 @@ public class PermissionController {
         permissionService.updateById(permission);
         return "redirect:/permission/findAll";
     }
+
+    //根据roleid查询角色没有的权限
+    @RequestMapping("/findOtherByRoleId")
+    public ModelAndView findOtherByRoleId(String roleId){
+        List<Permission> permissions = permissionService.findOtherByRoleId(roleId);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.getModelMap().addAttribute("permissions",permissions);
+        modelAndView.getModelMap().addAttribute("roleId",roleId);
+        modelAndView.setViewName("role_permission_add");
+        return modelAndView;
+    }
 }

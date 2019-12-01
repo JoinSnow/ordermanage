@@ -148,6 +148,8 @@
                                            class="btn bg-olive btn-xs">详情</a>
                                         <a href="${pageContext.request.contextPath}/role_update.jsp?roleId=${role.id}&roleName=${role.roleName}&roleDesc=${role.roleDesc}"
                                            class="btn bg-olive btn-xs">编辑</a>
+                                        <a href="${pageContext.request.contextPath}/permission/findOtherByRoleId?roleId=${role.id}"
+                                           class="btn bg-olive btn-xs">添加权限</a>
                                     </td>
                                 </tr>
                             </c:forEach>

@@ -38,6 +38,12 @@
             <security:password-encoder ref="passwordEncoder"></security:password-encoder>
         </security:authentication-provider>
     </security:authentication-manager>
+    <!--1. 服务器权限控制 开启注解-->
+    <!--<security:global-method-security secured-annotations="enabled"/>-->
+    <!--（2）JSR250注解控制权限 开启注解-->
+    <!--<security:global-method-security jsr250-annotations="enabled" />-->
+    <!--配置标签解析器-->
+    <bean class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"></bean>
     <!-- 配置一个自带加密器 -->
     <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 </beans>

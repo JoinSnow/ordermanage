@@ -54,4 +54,14 @@ public class RoleController {
         roleService.updateById(role);
         return "redirect:/role/findAll";
     }
+
+    //给角色添加权限
+    @RequestMapping("/addPermission")
+    public String addPermission(String roleId,String[] permissionIds){
+        for (String permissionId:permissionIds) {
+            roleService.addPermission(roleId,permissionId);
+        }
+        return "redirect:/role/findAll";
+    }
 }
+

@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <header class="main-header">
     <!-- Logo -->
     <a href="all-admin-index.html" class="logo">
@@ -20,7 +21,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="${pageContext.request.contextPath}/img/user2-160x160.jpg" class="user-image"
                              alt="User Image">
-                        <span class="hidden-xs">哥谭市民</span>
+                        <span class="hidden-xs"><security:authentication property="principal.username"/></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
@@ -29,7 +30,7 @@
                                  alt="User Image">
 
                             <p>
-                                哥谭市民 - 数据管理员
+                                <security:authentication property="principal.username"/> - 数据管理员
                                 <small>最后登录 11:20AM</small>
                             </p>
                         </li>

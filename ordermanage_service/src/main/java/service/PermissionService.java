@@ -31,4 +31,9 @@ public class PermissionService {
     public Permission findById(String id){
         return permissionDao.findById(id);
     }
+
+    //根据roleid查询角色没有的权限
+    public List<Permission> findOtherByRoleId(String roleId){
+        return permissionDao.findOtherByRoleId(roleId);
+    }
 }
