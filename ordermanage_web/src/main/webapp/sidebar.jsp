@@ -30,7 +30,7 @@
                 <ul class="treeview-menu">
                     <li id="user-setting">
                         <a href="${pageContext.request.contextPath}/user/findAll">
-                            <i class="fa fa-circle-o"></i>用户管理
+                            <i class="fa fa-circle-o"></i>管理员管理
                         </a>
                     </li>
                     <li id="role-setting">
@@ -79,6 +79,11 @@
                     <li id="member-cancel">
                         <a href="${pageContext.request.contextPath}/member/findAll">
                             <i class="fa fa-circle-o"></i>会员管理
+                        </a>
+                    </li>
+                    <li >
+                        <a href="${pageContext.request.contextPath}/ajax.jsp">
+                            <i class="fa fa-circle-o"></i>异步练习
                         </a>
                     </li>
                 </ul>

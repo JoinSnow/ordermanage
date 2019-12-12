@@ -16,7 +16,7 @@ public class Orders {
     private Product product;//产品
     private List<Traveller> travellers;//旅客
     private Member member;//会员
-    private Integer payType;//支付状态
+    private Integer payType;//支付类型
     private String payTypeStr;//支付状态字符串
     private String orderDesc;//订单描述
 

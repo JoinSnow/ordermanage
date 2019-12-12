@@ -22,7 +22,7 @@ public class UserInfoController {
     @RequestMapping("/findAll")
     @Secured({"ROLE_USER"})
     public ModelAndView findAll() {
-        int i=1/0;
+//        int i=1/0;
         List<UserInfo> users = userInfoService.findAll();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.getModelMap().addAttribute("users", users);
